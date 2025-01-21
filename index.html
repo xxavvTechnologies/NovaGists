@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TMC4G33B54"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TMC4G33B54');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Nova Gists - Online Note Keeping</title>
+    <meta name="description" content="Nova Gists is a powerful, free online note editor. Create, edit, and organize your notes easily.">
+    <meta name="keywords" content="note editor, online editor, text editor, rich text editor, Nova Gists">
+    <meta name="author" content="xxavvTechnologies">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://docs.nova.xxavvgroup.com/">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Nova Gists - Online Note Editor">
+    <meta property="og:description" content="Create and edit notes with Nova Gists' powerful online editor. Free, secure, and easy to use.">
+    <meta property="og:image" content="https://d2zcpib8duehag.cloudfront.net/Nova-Docs-Preview.png">
+    <meta property="og:url" content="https://docs.nova.xxavvgroup.com/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nova Gists - Professional Online Note Editor">
+    <meta name="twitter:description" content="Create and edit documents with Nova Docs' powerful online editor. Free, secure, and easy to use.">
+    <meta name="twitter:image" content="https://d2zcpib8duehag.cloudfront.net/Nova-Docs-Preview.png">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Nova Gists",
+        "applicationCategory": "Note Editor",
+        "operatingSystem": "Web",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Organization",
+            "name": "xxavvTechnologies",
+            "url": "https://tech.xxavvgroup.com"
+        },
+        "description": "A powerful, free online document editor. Create, edit, and share documents easily.",
+        "image": "https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png",
+        "screenshot": "https://d2zcpib8duehag.cloudfront.net/Nova-Docs-Preview.png"
+    }
+    </script>
+
+    <link rel="icon" type="image/x-icon" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/link-preview-js@1.0.0/dist/link-preview.min.js"></script>
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+        }
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 28px;
+        }
+    </style>
+</head>
+<body>
+    <div id="update-banner" class="update-banner">
+        <span>🎉 Welcome to Nova Gists! Create and organize your thoughts.</span>
+        <button class="close-banner" onclick="dismissBanner()">×</button>
+    </div>
+    <header>
+        <div class="logo-container">
+            <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" height="45">
+            <div class="logo-submenu">
+                <h3>Nova Gists</h3>
+                <div class="app-info">
+                    <p><span class="label">Version:</span> <span>1.0</span></p>
+                    <p><span class="label">Developer:</span> <span>xxavvTechnologies</span></p>
+                    <p><span class="label">Last Updated:</span> <span>January 20, 2025</span></p>
+                </div>
+                <a href="https://tech.xxavvgroup.com/nova/gists" target="_blank">
+                    Legal & Technical Information →
+                </a>
+                <a href="#" id="shortcuts-link">Keyboard Shortcuts</a>
+            </div>
+        </div>
+        <div class="user-dropdown">
+            <button class="dropbtn" id="profile-button">
+                <i class="fas fa-user-circle"></i>
+            </button>
+            <div class="dropdown-content" id="dropdown-menu">
+                <!-- Placeholder for user dropdown links -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Add notification container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <div class="notes-container">
+        <aside class="notes-sidebar">
+            <div class="sidebar-header">
+                <button id="new-note" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> New Note
+                </button>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-notes" placeholder="Search notes..." class="search-input">
+                </div>
+            </div>
+            <div id="notes-list" class="notes-list">
+                <!-- Notes will be populated here -->
+            </div>
+        </aside>
+        
+        <main class="note-content">
+            <div class="note-header">
+                <input type="text" id="note-title" placeholder="Note title" class="note-title-input">
+                <div class="note-actions">
+                    <button id="save-note" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <span id="last-edited" class="last-edited">Last edited: Just now</span>
+                    <button id="delete-note" class="btn btn-secondary">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="formatting-bar">
+                <div class="formatting-group">
+                    <button class="formatting-btn" data-command="bold" title="Bold">
+                        <i class="fas fa-bold"></i>
+                    </button>
+                    <button class="formatting-btn" data-command="italic" title="Italic">
+                        <i class="fas fa-italic"></i>
+                    </button>
+                    <button class="formatting-btn" data-command="underline" title="Underline">
+                        <i class="fas fa-underline"></i>
+                    </button>
+                </div>
+                
+                <div class="formatting-group">
+                    <button class="formatting-btn" data-command="insertUnorderedList" title="Unordered List">
+                        <i class="fas fa-list-ul"></i>
+                    </button>
+                    <button class="formatting-btn" data-command="insertOrderedList" title="Ordered List">
+                        <i class="fas fa-list-ol"></i>
+                    </button>
+                </div>
+                <div class="formatting-group">
+                    <button class="formatting-btn" data-command="insertChecklist" title="Checklist">
+                        <i class="far fa-check-square"></i>
+                    </button>
+                    <button class="formatting-btn" data-command="insertImage" title="Insert Image">
+                        <i class="far fa-image"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="editor" contenteditable="true" class="editor">
+            </div>
+        </main>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Insert Image</h2>
+            <div class="image-upload-container">
+                <div class="upload-options">
+                    <div class="upload-button-wrapper">
+                        <div class="upload-button">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload or drag an image here</span>
+                        </div>
+                        <input type="file" id="imageInput" accept="image/*">
+                    </div>
+                    <div class="or-separator">or</div>
+                    <div class="url-input-wrapper">
+                        <input type="text" id="imageUrl" placeholder="Paste an image URL here" class="search-input">
+                        <button id="imageUrlBtn" class="btn btn-primary">Insert from URL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Modal -->
+    <div id="tableModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Insert Table</h2>
+            <div class="table-controls">
+                <div class="input-group">
+                    <label for="tableRows">Rows:</label>
+                    <input type="number" id="tableRows" min="1" max="50" value="3">
+                </div>
+                <div class="input-group">
+                    <label for="tableCols">Columns:</label>
+                    <input type="number" id="tableCols" min="1" max="20" value="3">
+                </div>
+                <button id="insertTableBtn">Insert Table</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox for Keyboard Shortcuts -->
+    <div id="shortcuts-lightbox" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Keyboard Shortcuts</h2>
+            <ul>
+                <li><strong>Ctrl + N:</strong> New Note</li>
+                <li><strong>Ctrl + S:</strong> Save Note</li>
+                <li><strong>Ctrl + D:</strong> Delete Note</li>
+                <li><strong>Ctrl + B:</strong> Bold</li>
+                <li><strong>Ctrl + I:</strong> Italic</li>
+                <li><strong>Ctrl + U:</strong> Underline</li>
+                <li><strong>Ctrl + L:</strong> Unordered List</li>
+                <li><strong>Ctrl + O:</strong> Ordered List</li>
+                <li><strong>Ctrl + K:</strong> Checklist</li>
+                <li><strong>Ctrl + M:</strong> Insert Image</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="authentication.js"></script>
+    <script src="app.js" type="module"></script>
+    <script>
+        document.getElementById("profile-button").addEventListener("click", function() {
+            var dropdown = document.querySelector(".user-dropdown");
+            dropdown.classList.toggle("active");
+        });
+
+        document.getElementById("toggle-document-list").addEventListener("click", function () {
+                    const documentList = document.getElementById("document-list");
+            const toggleButton = this;
+
+            if (documentList.style.display === "none") {
+                documentList.style.display = "block";
+                toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i> Hide Documents';
+            } else {
+                documentList.style.display = "none";
+                toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i> Show Documents';
+            }
+        });
+
+        function dismissBanner() {
+            const banner = document.getElementById('update-banner');
+            banner.style.display = 'none';
+            localStorage.setItem('updbanner2.5', 'true');
+        }
+
+        // Check if banner was previously dismissed
+        window.addEventListener('DOMContentLoaded', () => {
+            const isDismissed = localStorage.getItem('updbanner2.5');
+            if (isDismissed === 'true') {
+                const banner = document.getElementById('update-banner');
+                banner.style.display = 'none';
+            }
+        });
+
+        // Lightbox functionality
+        const shortcutsLink = document.getElementById('shortcuts-link');
+        const shortcutsLightbox = document.getElementById('shortcuts-lightbox');
+        const closeLightbox = shortcutsLightbox.querySelector('.close');
+
+        shortcutsLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            shortcutsLightbox.style.display = 'block';
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            shortcutsLightbox.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === shortcutsLightbox) {
+                shortcutsLightbox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
