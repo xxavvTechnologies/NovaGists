@@ -7,6 +7,9 @@
     <link rel="icon" type="image/x-icon" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -15,9 +18,9 @@
             <div class="logo-submenu">
                 <h3>Nova Gists</h3>
                 <div class="app-info">
-                    <p><span class="label">Version:</span> <span>2.5.2</span></p>
+                    <p><span class="label">Version:</span> <span>1.5.0</span></p>
                     <p><span class="label">Developer:</span> <span>xxavvTechnologies</span></p>
-                    <p><span class="label">Last Updated:</span> <span>January 20, 2025</span></p>
+                    <p><span class="label">Last Updated:</span> <span>January 23, 2025</span></p>
                 </div>
                 <a href="https://tech.xxavvgroup.com/nova/docs" target="_blank">
                     Legal & Technical Information →
@@ -31,115 +34,145 @@
 
     <main>
         <div class="changelog-container">
-            <h1 style="margin-bottom: 32px;">Nova Gists <i>Changelog</i></h1>
+            <div class="version-badge">Latest Release</div>
+            <h1>Changelog</h1>
+            <p class="changelog-intro">Track the evolution of Nova Gists with our detailed changelog. Each update brings new features and improvements to enhance your experience.</p>
             
             <div class="changelog-entry">
-                <h2>Version 1.0 - Initial Release - January 1, 2025</h2>
-                <h3>🚀 Core Features</h3>
-                <ul>
-                    <li>Rich text editor with formatting controls</li>
-                    <li>Real-time autosave functionality</li>
-                    <li>Document organization with searchable list</li>
-                    <li>Local storage integration for offline use</li>
-                </ul>
-    
-                <h3>✨ Editor Features</h3>
-                <ul>
-                    <li>Text formatting (Bold, Italic, Underline)</li>
-                    <li>List support (Ordered and Unordered lists)</li>
-                    <li>Interactive checklist items</li>
-                    <li>Image upload and management with resize/crop tools</li>
-                    <li>Smart link previews with metadata</li>
-                </ul>
-    
-                <h3>⚡ Productivity</h3>
-                <ul>
-                    <li>Keyboard shortcuts for common actions</li>
-                    <li>Quick search functionality</li>
-                    <li>Last edited timestamps</li>
-                    <li>Document preview snippets</li>
-                    <li>Smart notification system</li>
-                </ul>
-    
+                <div class="version-header">
+                    <h2>Version 1.5.0</h2>
+                    <span class="version-date">January 23, 2025</span>
+                </div>
                 <h3>🎨 Interface</h3>
                 <ul>
-                    <li>Clean, modern user interface</li>
-                    <li>Responsive design for all screen sizes</li>
-                    <li>Intuitive document management</li>
-                    <li>Visual feedback for all actions</li>
+                    <li>Complete redesign</li>
+                    <li>Dark mode (beta)</li>
+                    <li>Improved elements of the app</li>
+                    <li>Brand font: Space Grotesk</li>
+                </ul>
+                
+                <h3>✨ Editor Features</h3>
+                <ul>
+                    <li>Improved editor speed (23% faster)</li>
                 </ul>
             </div>
+            
         </div>
     </main>
 
     <style>
+        /* Override container styles */
         .changelog-container {
-            width: 8.5in;
-            max-width: 95%;
+            width: 100%;
+            max-width: 900px;
             margin: 32px auto;
-            padding: 96px;
+            padding: 48px;
             background: #ffffff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid #d1dce6;
-            margin-top: 32px;
-            overflow-y: auto;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            border: 1px solid #e0e6ed;
         }
 
-        .changelog-entry {
+        .version-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #ebf5ff;
+            color: #0066ff;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .changelog-intro {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
             margin-bottom: 48px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e0e6ed;
         }
 
-        .changelog-entry {
-            margin-bottom: 48px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .changelog-entry:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .changelog-entry h2 {
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
             color: #2c3e50;
             margin-bottom: 16px;
+        }
+
+        .version-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .version-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 24px;
+            margin: 0;
+        }
+
+        .version-date {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .changelog-entry {
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #e0e6ed;
         }
 
         .changelog-entry h3 {
-            color: #34495e;
-            margin: 24px 0 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            color: #2c3e50;
             font-size: 18px;
+            font-weight: 600;
+            margin: 32px 0 16px;
         }
 
         .changelog-entry ul {
             margin: 0;
             padding-left: 24px;
+            list-style-type: none;
         }
 
         .changelog-entry li {
-            margin: 8px 0;
+            margin: 12px 0;
             color: #4a5568;
             line-height: 1.6;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .changelog-entry li::before {
+            content: "•";
+            color: #0066ff;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
             .changelog-container {
                 padding: 24px;
-            }
-            
-            .editor {
-                padding: 24px !important;
+                margin: 16px;
+                border-radius: 8px;
             }
 
-            .changelog-entry {
-                margin-bottom: 32px;
-                padding-bottom: 24px;
+            h1 {
+                font-size: 28px;
             }
 
-            .changelog-entry h2 {
+            .version-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .version-header h2 {
                 font-size: 20px;
             }
 

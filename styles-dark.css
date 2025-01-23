@@ -11,10 +11,6 @@ body {
     line-height: 1.6;
 }
 
-body * {
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
 main {
     margin-top: 0;
 }
@@ -1412,60 +1408,199 @@ button:disabled:hover {
     color: #1a73e8;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-    background: transparent;
-    border: none;
-    color: #666;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    margin-right: 12px;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.theme-toggle:hover {
-    background: rgba(0,0,0,0.05);
-}
-
-/* Typography */
+/* Dark Theme Colors */
 :root {
-    --font-heading: 'Space Grotesk', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    --bg-primary: #1a1b1e;
+    --bg-secondary: #2c2e33;
+    --bg-tertiary: #25262b;
+    --text-primary: #e4e5e7;
+    --text-secondary: #a1a2a6;
+    --border-color: rgba(255,255,255,0.1);
+    --highlight-color: #3391ff;
+    --hover-bg: #32343a;
+    --shadow-color: rgba(0,0,0,0.3);
 }
 
 body {
-    font-family: var(--font-body);
-    /* ...existing code... */
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
-h1, h2, h3, h4, h5, h6,
-.note-title-input,
-.logo-submenu h3,
-.modal-content h2 {
-    font-family: var(--font-heading);
+/* Header & Navigation */
+header {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--border-color);
+    box-shadow: 0 1px 3px var(--shadow-color);
 }
 
-/* Note header styles */
+/* Sidebar Styles */
+.notes-sidebar {
+    background: var(--bg-secondary);
+    border-right-color: var(--border-color);
+}
+
+.sidebar-header {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--border-color);
+}
+
+.search-input {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.search-icon {
+    color: var(--text-secondary);
+}
+
+/* Note Items */
+.note-item {
+    color: var(--text-primary);
+}
+
+.note-item:hover {
+    background: var(--hover-bg);
+}
+
+.note-item.active {
+    background: rgba(51, 145, 255, 0.1);
+    border-left-color: var(--highlight-color);
+}
+
+/* Editor Area */
+.note-content {
+    background: var(--bg-secondary);
+}
+
+.note-header {
+    background: var(--bg-secondary);
+    border-bottom-color: var(--border-color);
+}
+
 .note-title-input {
-    /* ...existing code... */
-    font-family: var(--font-heading);
-    font-weight: 600;
+    background: transparent;
+    color: var(--text-primary);
 }
 
-/* Logo styles */
+.editor {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Formatting Bar */
+.formatting-bar {
+    background: var(--bg-tertiary);
+    border-bottom-color: var(--border-color);
+}
+
+.formatting-btn {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.formatting-btn:hover {
+    background: var(--hover-bg);
+    color: var(--highlight-color);
+}
+
+.formatting-btn.active {
+    background: rgba(51, 145, 255, 0.1);
+    color: var(--highlight-color);
+    border-color: var(--highlight-color);
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--highlight-color);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--hover-bg);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #4a4b50;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5b60;
+}
+
+/* Modals */
+.modal-content {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Preview Items */
+.note-item-preview {
+    color: var(--text-secondary);
+}
+
+.last-edited {
+    color: var(--text-secondary);
+}
+
+/* Link Preview */
+.link-preview {
+    background: var(--bg-tertiary);
+    border-color: var(--border-color);
+}
+
+.preview-content h4 {
+    color: var(--text-primary);
+}
+
+.preview-content p {
+    color: var(--text-secondary);
+}
+
+/* Notifications */
+.notification {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Tables */
+.editor table th {
+    background: var(--bg-tertiary);
+}
+
+.editor table td, .editor table th {
+    border-color: var(--border-color);
+}
+
+/* Logo Submenu */
+.logo-submenu {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
 .logo-submenu h3 {
-    /* ...existing code... */
-    font-family: var(--font-heading);
+    color: var(--text-primary);
 }
 
-/* Modal styles */
-.modal-content h2 {
-    /* ...existing code... */
-    font-family: var(--font-heading);
+.app-info {
+    color: var(--text-secondary);
+}
+
+/* Update Banner - Dark Version */
+.update-banner {
+    background: rgba(51, 145, 255, 0.1);
+    border-bottom-color: var(--highlight-color);
+    color: var(--text-primary);
 }

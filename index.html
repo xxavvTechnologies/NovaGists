@@ -59,11 +59,14 @@
 
     <link rel="icon" type="image/x-icon" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-dark.css" id="dark-theme" disabled>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/link-preview-js@1.0.0/dist/link-preview.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         .modal {
             display: none;
@@ -90,6 +93,7 @@
             font-size: 28px;
         }
     </style>
+    <script src="theme.js"></script>
 </head>
 <body>
     <div id="update-banner" class="update-banner">
@@ -103,9 +107,9 @@
             <div class="logo-submenu">
                 <h3>Nova Gists</h3>
                 <div class="app-info">
-                    <p><span class="label">Version:</span> <span>1.0</span></p>
+                    <p><span class="label">Version:</span> <span>1.5.0</span></p>
                     <p><span class="label">Developer:</span> <span>xxavvTechnologies</span></p>
-                    <p><span class="label">Last Updated:</span> <span>January 20, 2025</span></p>
+                    <p><span class="label">Last Updated:</span> <span>January 23, 2025</span></p>
                 </div>
                 <a href="https://tech.xxavvgroup.com/nova/gists" target="_blank">
                     Legal & Technical Information →
@@ -114,13 +118,13 @@
             </div>
         </div>
         <div class="user-dropdown">
+            <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                <i class="fas fa-moon"></i>
+            </button>
             <button class="dropbtn" id="profile-button">
                 <i class="fas fa-user-circle"></i>
             </button>
             <div class="dropdown-content" id="dropdown-menu">
-                <!-- Placeholder for user dropdown links -->
-            </div>
-        </div>
     </header>
 
     <!-- Add notification container -->
@@ -309,5 +313,8 @@
             }
         });
     </script>
+    </script>
+</body>
+</html>
 </body>
 </html>
