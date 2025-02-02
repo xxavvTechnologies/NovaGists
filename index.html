@@ -296,13 +296,13 @@
             const banner = document.getElementById('update-banner');
             if (banner) {
                 banner.style.display = 'none';
-                localStorage.setItem('updbanner2.5', 'true');
+                localStorage.setItem('updbanner2.0.0', 'true');
             }
         }
 
         // Check if banner was previously dismissed
         window.addEventListener('DOMContentLoaded', () => {
-            const isDismissed = localStorage.getItem('updbanner2.5');
+            const isDismissed = localStorage.getItem('updbanner2.0.0');
             const banner = document.getElementById('update-banner');
             if (isDismissed === 'true' && banner) {
                 banner.style.display = 'none';
