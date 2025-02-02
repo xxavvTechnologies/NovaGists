@@ -96,102 +96,120 @@
     <script src="theme.js"></script>
 </head>
 <body>
+    <div id="notification-container" class="notification-container"></div>
     <div id="update-banner" class="update-banner">
         <span>🎉 Welcome to Nova Gists for the first time ever! Create and organize your thoughts. </span>
         <a href="changelog.html">Check out what you can do!</a>
         <button class="close-banner" onclick="dismissBanner()">×</button>
     </div>
+
     <header>
         <div class="logo-container">
             <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" height="45">
-            <div class="logo-submenu">
-                <h3>Nova Gists</h3>
-                <div class="app-info">
-                    <p><span class="label">Version:</span> <span>1.5.0</span></p>
-                    <p><span class="label">Developer:</span> <span>xxavvTechnologies</span></p>
-                    <p><span class="label">Last Updated:</span> <span>January 23, 2025</span></p>
-                </div>
-                <a href="https://tech.xxavvgroup.com/nova/gists" target="_blank">
-                    Legal & Technical Information →
-                </a>
-                <a href="#" id="shortcuts-link">Keyboard Shortcuts</a>
-            </div>
         </div>
-        <div class="user-dropdown">
-            <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+        
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search-notes" placeholder="Search your notes..." class="search-input">
+        </div>
+
+        <div class="header-actions">
+            <button id="save-note" class="btn-primary">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button id="delete-note" class="btn-secondary">
+                <i class="fas fa-trash"></i>
+            </button>
+            <button class="theme-toggle" id="theme-toggle">
                 <i class="fas fa-moon"></i>
             </button>
-            <button class="dropbtn" id="profile-button">
-                <i class="fas fa-user-circle"></i>
-            </button>
-            <div class="dropdown-content" id="dropdown-menu">
+        </div>
     </header>
 
-    <!-- Add notification container -->
-    <div id="notification-container" class="notification-container"></div>
+    <main class="notes-container">
+        <div class="notes-grid" id="notes-list">
+            <!-- Notes will be populated here -->
+        </div>
+    </main>
 
-    <div class="notes-container">
-        <aside class="notes-sidebar">
-            <div class="sidebar-header">
-                <button id="new-note" class="btn btn-primary">
-                    <i class="fas fa-plus"></i> New Note
+    <button id="new-note" class="new-note-fab">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <!-- Note Editor Modal -->
+    <div id="note-editor" class="note-editor-modal" style="display: none;">
+        <div class="note-editor-header">
+            <input type="text" id="note-title" placeholder="Title" class="note-title-input">
+            <div class="note-actions">
+                <button class="action-btn pin-btn">
+                    <i class="fas fa-thumbtack"></i>
                 </button>
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="search-notes" placeholder="Search notes..." class="search-input">
-                </div>
+                <button class="action-btn lock-btn">
+                    <i class="fas fa-lock"></i>
+                </button>
+                <button class="action-btn close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-            <div id="notes-list" class="notes-list">
-                <!-- Notes will be populated here -->
-            </div>
-        </aside>
+        </div>
         
-        <main class="note-content">
-            <div class="note-header">
-                <input type="text" id="note-title" placeholder="Note title" class="note-title-input">
-                <div class="note-actions">
-                    <button id="save-note" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Save
-                    </button>
-                    <span id="last-edited" class="last-edited">Last edited: Just now</span>
-                    <button id="delete-note" class="btn btn-secondary">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
+        <div class="formatting-bar">
+            <div class="formatting-group">
+                <button class="formatting-btn" data-command="bold" title="Bold">
+                    <i class="fas fa-bold"></i>
+                </button>
+                <button class="formatting-btn" data-command="italic" title="Italic">
+                    <i class="fas fa-italic"></i>
+                </button>
+                <button class="formatting-btn" data-command="underline" title="Underline">
+                    <i class="fas fa-underline"></i>
+                </button>
             </div>
-            <div class="formatting-bar">
-                <div class="formatting-group">
-                    <button class="formatting-btn" data-command="bold" title="Bold">
-                        <i class="fas fa-bold"></i>
-                    </button>
-                    <button class="formatting-btn" data-command="italic" title="Italic">
-                        <i class="fas fa-italic"></i>
-                    </button>
-                    <button class="formatting-btn" data-command="underline" title="Underline">
-                        <i class="fas fa-underline"></i>
-                    </button>
-                </div>
-                
-                <div class="formatting-group">
-                    <button class="formatting-btn" data-command="insertUnorderedList" title="Unordered List">
-                        <i class="fas fa-list-ul"></i>
-                    </button>
-                    <button class="formatting-btn" data-command="insertOrderedList" title="Ordered List">
-                        <i class="fas fa-list-ol"></i>
-                    </button>
-                </div>
-                <div class="formatting-group">
-                    <button class="formatting-btn" data-command="insertChecklist" title="Checklist">
-                        <i class="far fa-check-square"></i>
-                    </button>
-                    <button class="formatting-btn" data-command="insertImage" title="Insert Image">
-                        <i class="far fa-image"></i>
-                    </button>
-                </div>
+            
+            <div class="formatting-group">
+                <button class="formatting-btn" data-command="insertUnorderedList" title="Unordered List">
+                    <i class="fas fa-list-ul"></i>
+                </button>
+                <button class="formatting-btn" data-command="insertOrderedList" title="Ordered List">
+                    <i class="fas fa-list-ol"></i>
+                </button>
             </div>
-            <div id="editor" contenteditable="true" class="editor">
+            <div class="formatting-group">
+                <button class="formatting-btn" data-command="insertChecklist" title="Checklist">
+                    <i class="far fa-check-square"></i>
+                </button>
+                <button class="formatting-btn" data-command="insertImage" title="Insert Image">
+                    <i class="far fa-image"></i>
+                </button>
+                <button class="formatting-btn" data-command="insertTable" title="Insert Table">
+                    <i class="fas fa-table"></i>
+                </button>
+                <button class="formatting-btn" data-command="showShortcuts" title="Keyboard Shortcuts">
+                    <i class="fas fa-keyboard"></i>
+                </button>
             </div>
-        </main>
+        </div>
+        
+        <div class="note-editor-content">
+            <div id="editor" contenteditable="true" class="editor"></div>
+        </div>
+    </div>
+
+    <button id="astro-toggle" class="astro-toggle">
+        <i class="fas fa-robot"></i>
+        <span>Ask Astro</span>
+    </button>
+
+    <div id="astroChat" class="astro-chat">
+        <div class="astro-header">
+            <span>Astro AI Assistant</span>
+            <button class="close-astro"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="astro-messages"></div>
+        <div class="astro-input">
+            <input type="text" placeholder="Ask Astro about your note...">
+            <button><i class="fas fa-paper-plane"></i></button>
+        </div>
     </div>
 
     <!-- Image Upload Modal -->
@@ -257,38 +275,36 @@
         </div>
     </div>
 
+    <div id="lockNoteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Lock Note</h2>
+            <input type="password" id="noteLockPassword" placeholder="Enter password">
+            <button id="confirmLockNote" class="btn-primary">Lock Note</button>
+        </div>
+    </div>
+
     <script src="authentication.js"></script>
     <script src="app.js" type="module"></script>
     <script>
-        document.getElementById("profile-button").addEventListener("click", function() {
+        document.getElementById("profile-button")?.addEventListener("click", function() {
             var dropdown = document.querySelector(".user-dropdown");
-            dropdown.classList.toggle("active");
-        });
-
-        document.getElementById("toggle-document-list").addEventListener("click", function () {
-                    const documentList = document.getElementById("document-list");
-            const toggleButton = this;
-
-            if (documentList.style.display === "none") {
-                documentList.style.display = "block";
-                toggleButton.innerHTML = '<i class="fas fa-chevron-up"></i> Hide Documents';
-            } else {
-                documentList.style.display = "none";
-                toggleButton.innerHTML = '<i class="fas fa-chevron-down"></i> Show Documents';
-            }
+            dropdown?.classList.toggle("active");
         });
 
         function dismissBanner() {
             const banner = document.getElementById('update-banner');
-            banner.style.display = 'none';
-            localStorage.setItem('updbanner2.5', 'true');
+            if (banner) {
+                banner.style.display = 'none';
+                localStorage.setItem('updbanner2.5', 'true');
+            }
         }
 
         // Check if banner was previously dismissed
         window.addEventListener('DOMContentLoaded', () => {
             const isDismissed = localStorage.getItem('updbanner2.5');
-            if (isDismissed === 'true') {
-                const banner = document.getElementById('update-banner');
+            const banner = document.getElementById('update-banner');
+            if (isDismissed === 'true' && banner) {
                 banner.style.display = 'none';
             }
         });
@@ -296,25 +312,24 @@
         // Lightbox functionality
         const shortcutsLink = document.getElementById('shortcuts-link');
         const shortcutsLightbox = document.getElementById('shortcuts-lightbox');
-        const closeLightbox = shortcutsLightbox.querySelector('.close');
+        if (shortcutsLink && shortcutsLightbox) {
+            const closeLightbox = shortcutsLightbox.querySelector('.close');
 
-        shortcutsLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            shortcutsLightbox.style.display = 'block';
-        });
+            shortcutsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                shortcutsLightbox.style.display = 'block';
+            });
 
-        closeLightbox.addEventListener('click', () => {
-            shortcutsLightbox.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === shortcutsLightbox) {
+            closeLightbox?.addEventListener('click', () => {
                 shortcutsLightbox.style.display = 'none';
-            }
-        });
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === shortcutsLightbox) {
+                    shortcutsLightbox.style.display = 'none';
+                }
+            });
+        }
     </script>
-    </script>
-</body>
-</html>
 </body>
 </html>

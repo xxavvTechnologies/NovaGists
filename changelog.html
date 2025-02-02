@@ -3,183 +3,247 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latest Update | Nova Gists</title>
+    <title>What's New in Nova Gists 2.0</title>
     <link rel="icon" type="image/x-icon" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header>
-        <div class="logo-container">
-            <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Docs" height="45">
-            <div class="logo-submenu">
-                <h3>Nova Gists</h3>
-                <div class="app-info">
-                    <p><span class="label">Version:</span> <span>1.5.0</span></p>
-                    <p><span class="label">Developer:</span> <span>xxavvTechnologies</span></p>
-                    <p><span class="label">Last Updated:</span> <span>January 23, 2025</span></p>
-                </div>
-                <a href="https://tech.xxavvgroup.com/nova/docs" target="_blank">
-                    Legal & Technical Information →
-                </a>
-            </div>
-        </div>
-        <a href="index.html" class="btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Editor
-        </a>
-    </header>
-
-    <main>
-        <div class="changelog-container">
-            <div class="version-badge">Latest Release</div>
-            <h1>Changelog</h1>
-            <p class="changelog-intro">Track the evolution of Nova Gists with our detailed changelog. Each update brings new features and improvements to enhance your experience.</p>
-            
-            <div class="changelog-entry">
-                <div class="version-header">
-                    <h2>Version 1.5.0</h2>
-                    <span class="version-date">January 23, 2025</span>
-                </div>
-                <h3>🎨 Interface</h3>
-                <ul>
-                    <li>Complete redesign</li>
-                    <li>Dark mode (beta)</li>
-                    <li>Improved elements of the app</li>
-                    <li>Brand font: Space Grotesk</li>
-                </ul>
-                
-                <h3>✨ Editor Features</h3>
-                <ul>
-                    <li>Improved editor speed (23% faster)</li>
-                </ul>
-            </div>
-            
-        </div>
-    </main>
-
     <style>
-        /* Override container styles */
         .changelog-container {
-            width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             margin: 32px auto;
-            padding: 48px;
+            padding: 40px;
             background: #ffffff;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            border: 1px solid #e0e6ed;
+            border-radius: 24px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
         }
 
         .version-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            background: #ebf5ff;
-            color: #0066ff;
-            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #0066ff, #5900ff);
+            color: white;
+            border-radius: 100px;
+            font-weight: 600;
             font-size: 14px;
-            font-weight: 500;
             margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
         }
 
-        .changelog-intro {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
+        .version-badge i {
+            font-size: 12px;
+        }
+
+        .changelog-header {
             margin-bottom: 48px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid #e0e6ed;
+            text-align: center;
         }
 
-        h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 36px;
-            font-weight: 700;
-            color: #2c3e50;
+        .changelog-header h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #0066ff, #5900ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 16px;
         }
 
-        .version-header {
-            display: flex;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            background: #f8f9fc;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-        }
-
-        .version-header h2 {
-            font-family: 'Space Grotesk', sans-serif;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #0066ff, #5900ff);
+            color: white;
             font-size: 24px;
-            margin: 0;
         }
 
-        .version-date {
+        .feature-card h3 {
+            font-size: 20px;
+            margin: 0 0 12px 0;
+            color: #1a1a1a;
+        }
+
+        .feature-card p {
             color: #666;
-            font-size: 14px;
-        }
-
-        .changelog-entry {
-            margin-bottom: 48px;
-            padding-bottom: 32px;
-            border-bottom: 1px solid #e0e6ed;
-        }
-
-        .changelog-entry h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            color: #2c3e50;
-            font-size: 18px;
-            font-weight: 600;
-            margin: 32px 0 16px;
-        }
-
-        .changelog-entry ul {
-            margin: 0;
-            padding-left: 24px;
-            list-style-type: none;
-        }
-
-        .changelog-entry li {
-            margin: 12px 0;
-            color: #4a5568;
             line-height: 1.6;
-            position: relative;
-            padding-left: 24px;
+            margin: 0;
         }
 
-        .changelog-entry li::before {
-            content: "•";
+        .version-info {
+            text-align: center;
+            margin-bottom: 48px;
+            padding: 24px;
+            background: #f0f7ff;
+            border-radius: 16px;
+        }
+
+        .version-info p {
+            margin: 8px 0;
+            color: #666;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #f0f7ff;
             color: #0066ff;
-            position: absolute;
-            left: 0;
-            font-weight: bold;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #e0efff;
+            transform: translateX(-4px);
         }
 
         @media (max-width: 768px) {
             .changelog-container {
-                padding: 24px;
                 margin: 16px;
-                border-radius: 8px;
+                padding: 24px;
             }
 
-            h1 {
-                font-size: 28px;
+            .changelog-header h1 {
+                font-size: 32px;
             }
 
-            .version-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .version-header h2 {
-                font-size: 20px;
-            }
-
-            .changelog-entry h3 {
-                font-size: 16px;
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
+</head>
+<body>
+    <div class="changelog-container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Editor
+        </a>
+
+        <div class="changelog-header">
+            <div class="version-badge">
+                <i class="fas fa-rocket"></i>
+                Version 2.0.0
+            </div>
+            <h1>Welcome to Nova Gists 2.0</h1>
+            <p>A major update focused on intelligence, security, and collaboration</p>
+        </div>
+
+        <div class="version-info">
+            <p><strong>Released:</strong> February 2, 2025</p>
+            <p><strong>Status:</strong> Stable Release</p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon"></div>
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Meet Astro AI</h3>
+                <p>Our new AI assistant helps you write, edit, and analyze your notes. Currently in alpha, but already impressive!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <h3>Enhanced Dark Mode</h3>
+                <p>A completely redesigned dark theme that's easier on your eyes and looks stunning.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3>Advanced Image Handling</h3>
+                <p>Drag & drop, paste images directly, crop, resize, and more. Images have never been easier to work with.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Secure Note Locking</h3>
+                <p>Protect sensitive notes with password hashing and secure encryption.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3>Code Blocks</h3>
+                <p>Beautiful syntax highlighting for over 40 programming languages. Perfect for developers.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-markdown"></i>
+                </div>
+                <h3>Markdown Support</h3>
+                <p>Write in Markdown and see it rendered beautifully in real-time.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3>Version History</h3>
+                <p>Track changes and restore previous versions of your notes with ease.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Collaboration Ready</h3>
+                <p>The foundation for real-time collaborative editing is here. More features coming soon!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3>Smart Formatting</h3>
+                <p>Auto-formatting for links, lists, and code blocks. Just type and watch the magic happen.</p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 48px;">
+            <p>Have feedback? We'd love to hear from you!</p>
+            <a href="https://tech.xxavvgroup.com/nova/feedback" target="_blank" class="back-button" style="background: #0066ff; color: white;">
+                <i class="fas fa-comment"></i>
+                Share Feedback
+            </a>
+        </div>
+    </div>
 </body>
 </html>
