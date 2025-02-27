@@ -1,0 +1,95 @@
+@media (max-width: 768px) {
+    :root {
+        /* Adjust spacing for mobile */
+        --space-lg: 1rem;
+        --space-xl: 1.5rem;
+    }
+
+    .header {
+        padding: var(--space-sm);
+    }
+
+    .app-header {
+        padding: var(--space-sm);
+        height: 56px;
+    }
+
+    .header-left {
+        gap: var(--space-sm);
+    }
+
+    .logo-container img {
+        height: 32px;
+    }
+
+    .search-container {
+        max-width: none;
+    }
+
+    .header-actions {
+        margin-left: var(--space-sm);
+        gap: var(--space-sm);
+    }
+
+    .search-input {
+        font-size: var(--text-xs);
+        padding: var(--space-xs) var(--space-lg);
+        padding-left: 2rem;
+    }
+
+    .note-editor-header {
+        flex-direction: column;
+        gap: var(--space-sm);
+    }
+
+    .note-title-input {
+        font-size: var(--text-lg);
+    }
+
+    .formatting-bar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: var(--space-sm);
+    }
+
+    .formatting-group {
+        flex-shrink: 0;
+    }
+
+    .editor {
+        padding: var(--space-md);
+    }
+
+    .notification {
+        margin: 0 var(--space-sm);
+    }
+
+    .note-item {
+        margin: var(--space-sm);
+    }
+
+    .note-editor-modal {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+    }
+
+    .update-banner {
+        padding: var(--space-sm);
+        font-size: var(--text-sm);
+    }
+
+    .close-banner {
+        right: var(--space-sm);
+    }
+
+    .note-item-actions {
+        opacity: 1;
+        background: var(--bg-primary);
+        padding: var(--space-xs);
+        border-radius: var(--radius-sm);
+    }
+}

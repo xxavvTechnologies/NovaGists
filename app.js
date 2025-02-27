@@ -569,21 +569,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadNote(id) {
         const notes = NotesManager.getNotes();
         const note = notes[id];
-        if (note) {
-            currentNoteId = id;
-            titleInput.value = note.title;
-            editor.innerHTML = note.content;
-            showNoteEditor(note);
-            updateLastEdited(new Date(note.lastEdited));
-            NotesManager.renderNotesList(); // Update active state
+        if (!note) return;
+
+        if (note.locked) {
+            showUnlockNoteModal(id);
+            return;
         }
+
+        currentNoteId = id;
+        showNoteEditor(note);
+        updateLastEdited(new Date(note.lastEdited));
+        NotesManager.renderNotesList(); // Update active state
     }
 
     // Event Listeners
     newNoteBtn.addEventListener('click', () => {
         const note = NotesManager.createNote();
+        NotesManager.renderNotesList();
         loadNote(note.id);
-        titleInput?.focus();
     });
 
     deleteNoteBtn?.addEventListener('click', () => {
@@ -614,15 +617,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize
     window.addEventListener('load', () => {
-        const notes = NotesManager.getNotes();
-        const noteIds = Object.keys(notes);
-        
-        if (noteIds.length === 0) {
-            const note = NotesManager.createNote();
-            loadNote(note.id);
-            NotificationSystem.info('Welcome! Your first note has been created.');
-        } else {
-            loadNote(parseInt(noteIds[0]));
+        try {
+            const notes = NotesManager.getNotes();
+            const noteIds = Object.keys(notes);
+            
+            if (noteIds.length === 0) {
+                // Just show empty state
+                notesList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-edit"></i>
+                        <h2>No Notes Yet</h2>
+                        <p>Click the + button to create your first note</p>
+                    </div>
+                `;
+            } else {
+                // Just render the list
+                NotesManager.renderNotesList();
+            }
+        } catch (error) {
+            console.error('Initialization error:', error);
+            NotificationSystem.error('Failed to load notes');
         }
     });
 
@@ -934,83 +948,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    class AstroAI {
-        static async getResponse(noteContent, query) {
-            try {
-                // Add loading state
-                const messages = document.querySelector('.astro-messages');
-                const loadingId = Date.now();
-                messages.insertAdjacentHTML('beforeend', `
-                    <div id="loading-${loadingId}" class="astro-message assistant loading">
-                        <i class="fas fa-spinner fa-spin"></i> Thinking...
-                    </div>
-                `);
-
-                // Replace with actual API endpoint
-                const response = await fetch('https://api.nova.xxavvgroup.com/astro/chat', {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('astro_api_key')
-                    },
-                    body: JSON.stringify({ 
-                        context: noteContent.substring(0, 5000), // Limit context size
-                        query: query.substring(0, 500) // Limit query size
-                    })
-                });
-
-                document.getElementById(`loading-${loadingId}`).remove();
-
-                if (!response.ok) throw new Error('API request failed');
-                
-                return await response.json();
-            } catch (error) {
-                console.error('Astro AI Error:', error);
-                return { 
-                    error: true,
-                    message: 'Sorry, I encountered an error. Please try again later.'
-                };
-            }
-        }
-
-        static init() {
-            const toggle = document.getElementById('astro-toggle');
-            const chat = document.getElementById('astroChat');
-            const input = chat.querySelector('input');
-            const messages = chat.querySelector('.astro-messages');
-
-            toggle.addEventListener('click', () => {
-                chat.classList.toggle('active');
-            });
-
-            chat.querySelector('.close-astro').onclick = () => {
-                chat.classList.remove('active');
-            };
-
-            chat.querySelector('button').onclick = async () => {
-                const query = input.value.trim();
-                if (!query) return;
-
-                // Add user message
-                messages.innerHTML += `
-                    <div class="astro-message user">${query}</div>
-                `;
-
-                input.value = '';
-                const noteContent = editor.innerHTML;
-                
-                // Get AI response
-                const response = await this.getResponse(noteContent, query);
-                
-                messages.innerHTML += `
-                    <div class="astro-message assistant">${response.message}</div>
-                `;
-                
-                messages.scrollTop = messages.scrollHeight;
-            };
-        }
-    }
-
     class NoteSecurityManager {
         static async hashPassword(password) {
             const encoder = new TextEncoder();
@@ -1124,7 +1061,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Initialize new features
-    AstroAI.init();
 
     // Modify note creation/editing
     function showNoteEditor(note = null) {
@@ -1493,7 +1429,6 @@ document.addEventListener('DOMContentLoaded', () => {
             FeatureManager.init(editor);
             ImageHandler.setupImageHandlers(editor);
             NotesManager.renderNotesList();
-            AstroAI.init();
 
             // Add error boundaries
             window.addEventListener('error', (event) => {
@@ -1636,9 +1571,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize collaborative features
         FeatureManager.init(editor);
-
-        // Initialize Astro AI
-        AstroAI.init();
     }
 
     // Initialize when DOM is ready
@@ -1727,5 +1659,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // ...existing code...
+    function updateBannerState() {
+        const banner = document.getElementById('update-banner');
+        const isDismissed = localStorage.getItem('updbanner2.5.0'); // Update version number
+        if (isDismissed !== 'true' && banner) {
+            document.body.classList.add('has-banner');
+            banner.style.display = 'block';
+        } else {
+            document.body.classList.remove('has-banner');
+            banner.style.display = 'none';
+        }
+    }
+
+    function dismissBanner() {
+        localStorage.setItem('updbanner2.5.0', 'true'); // Update version number
+        updateBannerState();
+    }
 });

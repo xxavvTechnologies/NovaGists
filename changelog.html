@@ -1,51 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What's New in Nova Gists 2.0</title>
+    <title>What's New in Nova Gists 2.5.0</title>
     <link rel="icon" type="image/x-icon" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-dark.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script type="module" src="theme.js"></script>
+    
     <style>
+        body {
+            background: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+
         .changelog-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 32px auto;
             padding: 40px;
-            background: #ffffff;
+            background: var(--bg-secondary);
             border-radius: 24px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            box-shadow: var(--shadow-lg);
+            color: var(--text-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .changelog-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
         }
 
         .version-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 16px;
-            background: linear-gradient(135deg, #0066ff, #5900ff);
-            color: white;
+            padding: 8px 20px;
+            background: var(--primary-color);
+            color: var(--text-inverse);
             border-radius: 100px;
             font-weight: 600;
             font-size: 14px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
-        }
-
-        .version-badge i {
-            font-size: 12px;
+            box-shadow: var(--shadow-md);
         }
 
         .changelog-header {
-            margin-bottom: 48px;
             text-align: center;
+            margin-bottom: 60px;
+            position: relative;
         }
 
         .changelog-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 48px;
-            background: linear-gradient(135deg, #0066ff, #5900ff);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 16px;
@@ -53,59 +76,83 @@
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 32px 0;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin: 40px 0;
         }
 
         .feature-card {
-            background: #f8f9fc;
-            border-radius: 16px;
-            padding: 24px;
-            transition: all 0.3s ease;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            padding: 32px;
+            transition: var(--transition-normal);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: var(--transition-normal);
         }
 
         .feature-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
         }
 
         .feature-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #0066ff, #5900ff);
-            color: white;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-inverse);
             font-size: 24px;
+            box-shadow: var(--shadow-sm);
         }
 
         .feature-card h3 {
-            font-size: 20px;
-            margin: 0 0 12px 0;
-            color: #1a1a1a;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
-            margin: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            margin: 0 0 16px 0;
+            color: var(--text-primary);
         }
 
         .version-info {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
             margin-bottom: 48px;
             padding: 24px;
-            background: #f0f7ff;
-            border-radius: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            color: var(--text-secondary);
         }
 
-        .version-info p {
-            margin: 8px 0;
-            color: #666;
+        .version-info div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .version-info i {
+            color: var(--primary-color);
+            font-size: 20px;
         }
 
         .back-button {
@@ -113,17 +160,44 @@
             align-items: center;
             gap: 8px;
             padding: 12px 24px;
-            background: #f0f7ff;
-            color: #0066ff;
+            background: var(--bg-tertiary);
+            color: var(--primary-color);
             border-radius: 100px;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: var(--transition-normal);
+            margin-bottom: 32px;
         }
 
-        .back-button:hover {
-            background: #e0efff;
-            transform: translateX(-4px);
+        .feedback-section {
+            text-align: center;
+            margin-top: 60px;
+            padding: 32px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+        }
+
+        .feedback-section p {
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+
+        .feedback-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var (--text-inverse);
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition-normal);
+        }
+
+        .feedback-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         @media (max-width: 768px) {
@@ -139,109 +213,101 @@
             .feature-grid {
                 grid-template-columns: 1fr;
             }
+
+            .version-info {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="changelog-container">
         <a href="index.html" class="back-button">
-            <i class="fas fa-arrow-left"></i>
+            <i class="ri-arrow-left-line"></i>
             Back to Editor
         </a>
 
         <div class="changelog-header">
             <div class="version-badge">
-                <i class="fas fa-rocket"></i>
-                Version 2.0.0
+                <i class="ri-rocket-line"></i>
+                Version 2.5.0
             </div>
-            <h1>Welcome to Nova Gists 2.0</h1>
-            <p>A major update focused on intelligence, security, and collaboration</p>
+            <h1>Nova Gists February Update</h1>
+            <p>Major improvements to authentication, theme system, and user experience</p>
         </div>
 
         <div class="version-info">
-            <p><strong>Released:</strong> February 2, 2025</p>
-            <p><strong>Status:</strong> Stable Release</p>
+            <div>
+                <i class="ri-calendar-line"></i>
+                <strong>Released:</strong> February 26, 2025
+            </div>
+            <div>
+                <i class="ri-check-double-line"></i>
+                <strong>Status:</strong> Stable Release
+            </div>
+            <div>
+                <i class="ri-code-line"></i>
+                <strong>Build:</strong> 2.5.0
+            </div>
         </div>
 
         <div class="feature-grid">
             <div class="feature-card">
-                <div class="feature-icon"></div>
-                    <i class="fas fa-robot"></i>
+                <div class="feature-icon">
+                    <i class="ri-shield-keyhole-line"></i>
                 </div>
-                <h3>Meet Astro AI</h3>
-                <p>Our new AI assistant helps you write, edit, and analyze your notes. Currently in alpha, but already impressive!</p>
+                <h3>Enhanced Authentication</h3>
+                <p>Completely rebuilt auth system with Nova ID, Google, and GitHub integration. Seamless login experience with persistent sessions.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-moon"></i>
+                    <i class="ri-moon-line"></i>
                 </div>
-                <h3>Enhanced Dark Mode</h3>
-                <p>A completely redesigned dark theme that's easier on your eyes and looks stunning.</p>
+                <h3>Improved Dark Mode</h3>
+                <p>System-aware theme switching, persistent theme preferences, and refined dark mode aesthetics across all components.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-image"></i>
+                    <i class="ri-user-smile-line"></i>
                 </div>
-                <h3>Advanced Image Handling</h3>
-                <p>Drag & drop, paste images directly, crop, resize, and more. Images have never been easier to work with.</p>
+                <h3>User Profile Updates</h3>
+                <p>New profile dropdown with account management, welcome message, and seamless profile picture integration.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-lock"></i>
+                    <i class="ri-layout-grid-line"></i>
                 </div>
-                <h3>Secure Note Locking</h3>
-                <p>Protect sensitive notes with password hashing and secure encryption.</p>
+                <h3>UI Refinements</h3>
+                <p>Polished interface elements, improved modals, and better responsive design for mobile devices.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-code"></i>
+                    <i class="ri-search-line"></i>
                 </div>
-                <h3>Code Blocks</h3>
-                <p>Beautiful syntax highlighting for over 40 programming languages. Perfect for developers.</p>
+                <h3>Search Improvements</h3>
+                <p>Enhanced search functionality with auto-complete disabled and better mobile optimization.</p>
             </div>
 
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-markdown"></i>
+                    <i class="ri-database-line"></i>
                 </div>
-                <h3>Markdown Support</h3>
-                <p>Write in Markdown and see it rendered beautifully in real-time.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <h3>Version History</h3>
-                <p>Track changes and restore previous versions of your notes with ease.</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <h3>Collaboration Ready</h3>
-                <p>The foundation for real-time collaborative editing is here. More features coming soon!</p>
-            </div>
-
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-magic"></i>
-                </div>
-                <h3>Smart Formatting</h3>
-                <p>Auto-formatting for links, lists, and code blocks. Just type and watch the magic happen.</p>
+                <h3>Better Data Management</h3>
+                <p>Improved state management, persistent settings, and robust error handling throughout the application.</p>
             </div>
         </div>
 
-        <div style="text-align: center; margin-top: 48px;">
-            <p>Have feedback? We'd love to hear from you!</p>
-            <a href="https://tech.xxavvgroup.com/nova/feedback" target="_blank" class="back-button" style="background: #0066ff; color: white;">
-                <i class="fas fa-comment"></i>
-                Share Feedback
+        <div class="feedback-section">
+            <p>We're continuously improving Nova Gists based on your feedback</p>
+            <a href="https://tech.xxavvgroup.com/nova/feedback" target="_blank" class="feedback-button">
+                <i class="ri-feedback-line"></i>
+                Share Your Feedback
             </a>
         </div>
     </div>

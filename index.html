@@ -59,14 +59,27 @@
 
     <link rel="icon" type="image/x-icon" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="styles-dark.css" id="dark-theme" disabled>
+    <link rel="stylesheet" href="styles-dark.css">
+    <script src="theme.js"></script>
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/link-preview-js@1.0.0/dist/link-preview.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Replace Font Awesome with Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Replace the old Firebase scripts with these -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+        import { getAuth } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+    </script>
+    
+    <!-- Import auth.js as a module -->
+    <script type="module" src="auth.js"></script>
+    
     <style>
         .modal {
             display: none;
@@ -94,35 +107,91 @@
         }
     </style>
     <script src="theme.js"></script>
+    <script>
+        // Dynamic stylesheet switching
+        function loadMobileStyles() {
+            const mobileStylesheet = document.createElement('link');
+            mobileStylesheet.rel = 'stylesheet';
+            mobileStylesheet.href = 'styles-mobile.css';
+            mobileStylesheet.id = 'mobile-styles';
+            document.head.appendChild(mobileStylesheet);
+        }
+
+        function handleViewportChange(e) {
+            const mobileStyles = document.getElementById('mobile-styles');
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                if (!mobileStyles) loadMobileStyles();
+            } else {
+                mobileStyles?.remove();
+            }
+        }
+
+        // Initial check
+        handleViewportChange();
+
+        // Listen for viewport changes
+        window.matchMedia('(max-width: 768px)').addListener(handleViewportChange);
+    </script>
 </head>
 <body>
     <div id="notification-container" class="notification-container"></div>
+    
     <div id="update-banner" class="update-banner">
-        <span>🎉 Welcome to Nova Gists for the first time ever! Create and organize your thoughts. </span>
-        <a href="changelog.html">Check out what you can do!</a>
+        <span>🎉 Nova Gists 2.5.0 is here! Major improvements to authentication, theme system, and user experience. </span>
+        <a href="changelog.html">See what's new!</a>
         <button class="close-banner" onclick="dismissBanner()">×</button>
     </div>
 
-    <header>
-        <div class="logo-container">
-            <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" height="45">
-        </div>
-        
-        <div class="search-container">
-            <i class="fas fa-search search-icon"></i>
-            <input type="text" id="search-notes" placeholder="Search your notes..." class="search-input">
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo-container">
+                <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" height="40">
+            </div>
+            
+            <div class="search-container">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" 
+                       id="search-notes" 
+                       placeholder="Search notes..." 
+                       class="search-input"
+                       autocomplete="off"
+                       spellcheck="false"
+                       autocorrect="off"
+                       autocapitalize="off">
+            </div>
         </div>
 
         <div class="header-actions">
-            <button id="save-note" class="btn-primary">
-                <i class="fas fa-save"></i> Save
+            <div class="auth-buttons" id="auth-buttons">
+                <button class="btn-secondary nova-login-btn" onclick="showLoginModal()">
+                    <i class="ri-shield-keyhole-line"></i> Login with Nova ID
+                </button>
+            </div>
+
+            <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                <i class="ri-moon-line"></i>
             </button>
-            <button id="delete-note" class="btn-secondary">
-                <i class="fas fa-trash"></i>
+            <button id="save-note" class="btn-primary" title="Save note (Ctrl+S)">
+                <i class="ri-save-line"></i> Save
             </button>
-            <button class="theme-toggle" id="theme-toggle">
-                <i class="fas fa-moon"></i>
-            </button>
+        </div>
+
+        <div class="user-profile hidden" id="user-profile">
+            <div class="profile-info">
+                <img src="" alt="Profile" id="user-avatar" class="user-avatar">
+                <span id="welcome-message" class="welcome-message"></span>
+                <i class="ri-arrow-down-s-line dropdown-icon"></i>
+            </div>
+            <div class="profile-dropdown">
+                <a href="https://account.nova.xxavvgroup.com" class="dropdown-item">
+                    <i class="ri-user-settings-line"></i>
+                    Manage Account
+                </a>
+                <button class="dropdown-item" id="sign-out-btn">
+                    <i class="ri-logout-box-line"></i>
+                    Sign out
+                </button>
+            </div>
         </div>
     </header>
 
@@ -132,83 +201,67 @@
         </div>
     </main>
 
-    <button id="new-note" class="new-note-fab">
-        <i class="fas fa-plus"></i>
+    <button id="new-note" class="new-note-fab" title="New note (Ctrl+N)">
+        <i class="ri-add-line"></i>
     </button>
 
     <!-- Note Editor Modal -->
     <div id="note-editor" class="note-editor-modal" style="display: none;">
         <div class="note-editor-header">
-            <input type="text" id="note-title" placeholder="Title" class="note-title-input">
+            <input type="text" id="note-title" placeholder="Note title" class="note-title-input">
             <div class="note-actions">
-                <button class="action-btn pin-btn">
-                    <i class="fas fa-thumbtack"></i>
+                <button class="action-btn pin-btn" title="Pin note">
+                    <i class="ri-pushpin-line"></i>
                 </button>
-                <button class="action-btn lock-btn">
-                    <i class="fas fa-lock"></i>
+                <button class="action-btn" title="More options">
+                    <i class="ri-more-2-fill"></i>
                 </button>
-                <button class="action-btn close-btn">
-                    <i class="fas fa-times"></i>
+                <button class="action-btn close-btn" title="Close">
+                    <i class="ri-close-line"></i>
                 </button>
             </div>
         </div>
         
         <div class="formatting-bar">
             <div class="formatting-group">
-                <button class="formatting-btn" data-command="bold" title="Bold">
-                    <i class="fas fa-bold"></i>
+                <button class="formatting-btn" data-command="bold" title="Bold (Ctrl+B)">
+                    <i class="ri-bold"></i>
                 </button>
-                <button class="formatting-btn" data-command="italic" title="Italic">
-                    <i class="fas fa-italic"></i>
+                <button class="formatting-btn" data-command="italic" title="Italic (Ctrl+I)">
+                    <i class="ri-italic"></i>
                 </button>
-                <button class="formatting-btn" data-command="underline" title="Underline">
-                    <i class="fas fa-underline"></i>
+                <button class="formatting-btn" data-command="underline" title="Underline (Ctrl+U)">
+                    <i class="ri-underline"></i>
                 </button>
             </div>
             
             <div class="formatting-group">
-                <button class="formatting-btn" data-command="insertUnorderedList" title="Unordered List">
-                    <i class="fas fa-list-ul"></i>
+                <button class="formatting-btn" data-command="insertUnorderedList" title="Bullet list (Ctrl+L)">
+                    <i class="ri-list-unordered"></i>
                 </button>
-                <button class="formatting-btn" data-command="insertOrderedList" title="Ordered List">
-                    <i class="fas fa-list-ol"></i>
+                <button class="formatting-btn" data-command="insertOrderedList" title="Numbered list (Ctrl+O)">
+                    <i class="ri-list-ordered"></i>
+                </button>
+                <button class="formatting-btn" data-command="insertChecklist" title="Checklist (Ctrl+K)">
+                    <i class="ri-checkbox-line"></i>
                 </button>
             </div>
+            
             <div class="formatting-group">
-                <button class="formatting-btn" data-command="insertChecklist" title="Checklist">
-                    <i class="far fa-check-square"></i>
+                <button class="formatting-btn" data-command="insertImage" title="Insert image (Ctrl+M)">
+                    <i class="ri-image-line"></i>
                 </button>
-                <button class="formatting-btn" data-command="insertImage" title="Insert Image">
-                    <i class="far fa-image"></i>
+                <button class="formatting-btn" data-command="insertTable" title="Insert table">
+                    <i class="ri-table-line"></i>
                 </button>
-                <button class="formatting-btn" data-command="insertTable" title="Insert Table">
-                    <i class="fas fa-table"></i>
-                </button>
-                <button class="formatting-btn" data-command="showShortcuts" title="Keyboard Shortcuts">
-                    <i class="fas fa-keyboard"></i>
+                <button class="formatting-btn" data-command="showShortcuts" title="Keyboard shortcuts (Ctrl+/)">
+                    <i class="ri-keyboard-line"></i>
                 </button>
             </div>
         </div>
         
         <div class="note-editor-content">
             <div id="editor" contenteditable="true" class="editor"></div>
-        </div>
-    </div>
-
-    <button id="astro-toggle" class="astro-toggle">
-        <i class="fas fa-robot"></i>
-        <span>Ask Astro</span>
-    </button>
-
-    <div id="astroChat" class="astro-chat">
-        <div class="astro-header">
-            <span>Astro AI Assistant</span>
-            <button class="close-astro"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="astro-messages"></div>
-        <div class="astro-input">
-            <input type="text" placeholder="Ask Astro about your note...">
-            <button><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
@@ -221,7 +274,7 @@
                 <div class="upload-options">
                     <div class="upload-button-wrapper">
                         <div class="upload-button">
-                            <i class="fas fa-cloud-upload-alt"></i>
+                            <i class="ri-cloud-upload-line"></i>
                             <span>Click to upload or drag an image here</span>
                         </div>
                         <input type="file" id="imageInput" accept="image/*">
@@ -275,6 +328,7 @@
         </div>
     </div>
 
+    <!-- Lock Note Modal -->
     <div id="lockNoteModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -284,7 +338,48 @@
         </div>
     </div>
 
-    <script src="authentication.js"></script>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content login-modal">
+            <span class="close">&times;</span>
+            <div class="login-header">
+                <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova ID" height="40">
+                <h2>Login with Nova ID</h2>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <div class="auth-separator">or</div>
+
+            <div class="social-login-options">
+                <button class="btn-social btn-google" id="google-auth-btn">
+                    <i class="ri-google-fill"></i>
+                    Continue with Google
+                </button>
+                <button class="btn-social btn-github" id="github-auth-btn">
+                    <i class="ri-github-fill"></i>
+                    Continue with GitHub
+                </button>
+            </div>
+
+            <div class="login-footer">
+                <div class="signup-prompt">
+                    Don't have an account? 
+                    <a href="https://account.nova.xxavvgroup.com/signup">Create one</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js" type="module"></script>
     <script>
         document.getElementById("profile-button")?.addEventListener("click", function() {
@@ -292,44 +387,65 @@
             dropdown?.classList.toggle("active");
         });
 
-        function dismissBanner() {
+        function updateBannerState() {
             const banner = document.getElementById('update-banner');
-            if (banner) {
+            const isDismissed = localStorage.getItem('updbanner2.5.0');
+            if (isDismissed !== 'true' && banner) {
+                document.body.classList.add('has-banner');
+                banner.style.display = 'block';
+            } else {
+                document.body.classList.remove('has-banner');
                 banner.style.display = 'none';
-                localStorage.setItem('updbanner2.0.0', 'true');
             }
         }
 
-        // Check if banner was previously dismissed
-        window.addEventListener('DOMContentLoaded', () => {
-            const isDismissed = localStorage.getItem('updbanner2.0.0');
-            const banner = document.getElementById('update-banner');
-            if (isDismissed === 'true' && banner) {
-                banner.style.display = 'none';
-            }
-        });
+        function dismissBanner() {
+            localStorage.setItem('updbanner2.5.0', 'true');
+            updateBannerState();
+        }
+
+        // Check banner state on load
+        window.addEventListener('DOMContentLoaded', updateBannerState);
 
         // Lightbox functionality
         const shortcutsLink = document.getElementById('shortcuts-link');
         const shortcutsLightbox = document.getElementById('shortcuts-lightbox');
         if (shortcutsLink && shortcutsLightbox) {
             const closeLightbox = shortcutsLightbox.querySelector('.close');
-
             shortcutsLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 shortcutsLightbox.style.display = 'block';
             });
-
             closeLightbox?.addEventListener('click', () => {
                 shortcutsLightbox.style.display = 'none';
             });
-
             window.addEventListener('click', (e) => {
                 if (e.target === shortcutsLightbox) {
                     shortcutsLightbox.style.display = 'none';
                 }
             });
         }
+
+        // Add login modal handler
+        function showLoginModal() {
+            const loginModal = document.getElementById('loginModal');
+            if (loginModal) {
+                loginModal.style.display = 'block';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const loginModal = document.getElementById('loginModal');
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+            }
+        });
+
+        // Close modal when clicking close button
+        document.querySelector('#loginModal .close')?.addEventListener('click', () => {
+            document.getElementById('loginModal').style.display = 'none';
+        });
     </script>
 </body>
 </html>
