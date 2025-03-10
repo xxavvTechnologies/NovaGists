@@ -12,10 +12,18 @@
     .app-header {
         padding: var(--space-sm);
         height: 56px;
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        height: 60px;
+        padding: 0;
+        background: var(--bg-primary);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     }
 
     .header-left {
         gap: var(--space-sm);
+        display: none; /* Hide logo and search on mobile */
     }
 
     .logo-container img {
@@ -29,6 +37,10 @@
     .header-actions {
         margin-left: var(--space-sm);
         gap: var(--space-sm);
+        width: 100%;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0 var(--space-md);
     }
 
     .search-input {
@@ -40,10 +52,12 @@
     .note-editor-header {
         flex-direction: column;
         gap: var(--space-sm);
+        padding: var(--space-sm);
     }
 
     .note-title-input {
         font-size: var(--text-lg);
+        font-size: var(--text-md);
     }
 
     .formatting-bar {
@@ -51,14 +65,28 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         padding: var(--space-sm);
+        position: fixed;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+        top: auto;
+        background: var(--bg-primary);
+        box-shadow: 0 -1px 2px rgba(0,0,0,0.1);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        padding: var(--space-xs) var(--space-sm);
     }
 
     .formatting-group {
         flex-shrink: 0;
+        display: inline-flex;
+        padding-right: var(--space-md);
     }
 
     .editor {
         padding: var(--space-md);
+        font-size: 16px; /* Ensure readable text size on mobile */
     }
 
     .notification {
@@ -67,6 +95,7 @@
 
     .note-item {
         margin: var(--space-sm);
+        margin-bottom: var(--space-sm);
     }
 
     .note-editor-modal {
@@ -75,6 +104,12 @@
         right: 0;
         bottom: 0;
         border-radius: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 60px; /* Account for bottom bar */
+        border-radius: 0;
+        margin: 0;
     }
 
     .update-banner {
@@ -91,5 +126,379 @@
         background: var(--bg-primary);
         padding: var(--space-xs);
         border-radius: var(--radius-sm);
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+        display: block;
+        padding: var(--space-sm);
+        color: var(--text-secondary);
+    }
+
+    /* Enhanced Mobile Sidebar */
+    .mobile-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 60px;
+        width: 100%;
+        background: var(--bg-primary);
+        z-index: var(--z-modal);
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .mobile-sidebar-header {
+        padding: var(--space-md);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border-light);
+        background: var(--bg-primary);
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .mobile-close-btn {
+        padding: var(--space-sm);
+        color: var(--text-secondary);
+        border: none;
+        background: none;
+        border-radius: var(--radius-full);
+        cursor: pointer;
+    }
+
+    .mobile-sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--space-md);
+    }
+
+    .mobile-search-wrapper {
+        position: sticky;
+        top: 0;
+        padding: var(--space-sm);
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .note-editor-content {
+        height: calc(100% - 110px);
+        padding-bottom: 60px;
+    }
+
+    /* Enhanced Note Editor for Mobile */
+    .note-editor-modal {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 60px);
+    }
+
+    .note-editor-header {
+        padding: var(--space-sm) var(--space-md);
+        flex-direction: row;
+        gap: var(--space-sm);
+        height: 60px;
+    }
+
+    .note-title-input {
+        font-size: var(--text-md);
+        height: 40px;
+        padding: var(--space-xs) var(--space-sm);
+    }
+
+    .note-editor-content {
+        flex: 1;
+        padding-bottom: 120px; /* Account for formatting bar + bottom nav */
+    }
+
+    .editor {
+        padding: var(--space-md);
+        font-size: 16px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: pan-y;
+    }
+
+    /* Bottom Navigation */
+    .mobile-bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: var(--bg-primary);
+        border-top: 1px solid var(--border-light);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 var(--space-md);
+        z-index: var(--z-above);
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: var(--text-secondary);
+        font-size: var(--text-xs);
+        text-decoration: none;
+        padding: var(--space-xs);
+    }
+
+    .nav-item i {
+        font-size: var(--text-xl);
+    }
+
+    .nav-item.active {
+        color: var(--primary-color);
+    }
+
+    /* Touch-friendly note items */
+    .note-item {
+        padding: var(--space-md);
+        margin: var(--space-xs);
+        touch-action: pan-x;
+        position: relative;
+    }
+
+    .note-item-actions {
+        position: static;
+        margin-top: var(--space-sm);
+        opacity: 1;
+        justify-content: flex-end;
+    }
+
+    /* Mobile-optimized formatting bar */
+    .formatting-bar {
+        position: fixed;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-top: 1px solid var(--border-light);
+        padding: var(--space-xs) var(--space-sm);
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: var(--space-sm);
+    }
+
+    .formatting-group {
+        display: inline-flex;
+        gap: var(--space-xs);
+        padding: 0;
+        margin-right: var(--space-sm);
+    }
+
+    .formatting-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-full);
+    }
+
+    /* Side Menu */
+    .mobile-sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 60px; /* Account for bottom bar */
+        width: 280px;
+        background: var(--bg-primary);
+        z-index: var(--z-modal);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobile-sidebar.active {
+        transform: translateX(0);
+    }
+
+    .note-editor-content {
+        height: calc(100% - 110px);
+        padding-bottom: 60px;
+    }
+
+    /* Notes Grid */
+    .notes-container {
+        margin-bottom: 120px; /* Account for bottom bar + formatting bar */
+        padding: var(--space-sm);
+    }
+
+    /* FAB Adjustments */
+    .new-note-fab {
+        bottom: 80px; /* Position above bottom bar */
+        right: var(--space-md);
+        width: 48px;
+        height: 48px;
+    }
+
+    /* Enlarged Touch Targets */
+    .formatting-btn,
+    .action-btn,
+    .mobile-menu-btn,
+    .mobile-close-btn,
+    .theme-toggle,
+    .nav-item {
+        min-width: 48px;
+        min-height: 48px;
+        padding: var(--space-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Larger icons */
+    .formatting-btn i,
+    .action-btn i,
+    .mobile-menu-btn i,
+    .nav-item i {
+        font-size: 24px;
+    }
+
+    /* Mobile Auth */
+    .auth-buttons {
+        position: fixed;
+        bottom: 80px;
+        left: var(--space-md);
+        right: var(--space-md);
+        z-index: var(--z-above);
+    }
+
+    .nova-login-btn {
+        width: 100%;
+        height: 56px;
+        font-size: var(--text-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    /* Modal Improvements */
+    .modal-content {
+        margin: 0;
+        height: 100%;
+        max-height: 100%;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .login-modal {
+        padding: var(--space-lg);
+    }
+
+    /* Form Controls */
+    .form-group input {
+        height: 56px;
+        font-size: var(--text-lg);
+        padding: var(--space-md);
+    }
+
+    .btn-social {
+        height: 56px;
+        font-size: var(--text-md);
+    }
+
+    /* Bottom Navigation */
+    .mobile-bottom-nav {
+        height: 72px; /* Taller bottom nav */
+    }
+
+    .nav-item {
+        padding: var(--space-sm) var(--space-xs);
+        min-width: 64px;
+    }
+
+    /* Action Buttons */
+    .note-item-actions button {
+        width: 44px;
+        height: 44px;
+        margin: 0 var(--space-xs);
+    }
+
+    /* Swipe Actions */
+    .note-item-swipe-actions button {
+        width: 80px;
+        height: 100%;
+    }
+
+    /* Editor Controls */
+    .note-editor-header {
+        height: 72px;
+        padding: var(--space-md);
+    }
+
+    .note-title-input {
+        font-size: var(--text-xl);
+        height: 48px;
+    }
+
+    /* Mobile Search */
+    .mobile-search-wrapper .search-input {
+        height: 56px;
+        font-size: var(--text-lg);
+        padding: var(--space-md) var(--space-xl);
+        padding-left: 56px; /* Space for icon */
+    }
+
+    .mobile-search-wrapper .search-icon {
+        font-size: 24px;
+        left: var(--space-md);
+    }
+
+    /* Mobile Menu */
+    .mobile-sidebar {
+        width: 100%; /* Full width sidebar */
+    }
+
+    .mobile-sidebar-header {
+        height: 72px;
+        padding: var(--space-md);
+    }
+
+    /* Notifications */
+    .notification {
+        padding: var(--space-md);
+        margin: var(--space-sm);
+        border-radius: var(--radius-lg);
+    }
+
+    .notification-message {
+        font-size: var(--text-md);
+    }
+
+    /* Show mobile elements */
+    .mobile-menu-btn,
+    .mobile-sidebar,
+    .mobile-bottom-nav,
+    .mobile-search-wrapper,
+    .mobile-auth-container {
+        display: flex;
+    }
+
+    .mobile-notes-list {
+        display: block;
+    }
+
+    /* Hide desktop elements */
+    .desktop-only,
+    .header-left {
+        display: none !important;
     }
 }

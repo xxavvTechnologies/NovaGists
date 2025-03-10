@@ -389,6 +389,7 @@ body.has-banner .notes-container {
     flex-direction: column;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+    overflow: hidden; /* Add this to prevent double scrollbars */
 }
 
 .note-editor-header {
@@ -397,6 +398,11 @@ body.has-banner .notes-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-shrink: 0; /* Add this to prevent header from shrinking */
+    position: sticky;
+    top: 0;
+    background: var(--bg-primary);
+    z-index: var(--z-above);
 }
 
 .note-title-input {
@@ -413,11 +419,16 @@ body.has-banner .notes-container {
     border-bottom: 1px solid var(--border-light);
     display: flex;
     gap: var(--space-lg);
+    flex-shrink: 0; /* Add this to prevent formatting bar from shrinking */
+    position: sticky;
+    top: 60px; /* Height of the header */
+    background: var(--bg-primary);
+    z-index: var(--z-above);
 }
 
 .formatting-group {
     display: flex;
-    gap: var(--space-sm);
+    gap: var (--space-sm);
 }
 
 .formatting-btn {
@@ -435,16 +446,27 @@ body.has-banner .notes-container {
     color: var(--text-primary);
 }
 
-.editor {
+.note-editor-content {
     flex: 1;
+    overflow-y: auto;
+    min-height: 0; /* Add this to ensure proper flexbox behavior */
+    position: relative;
+    height: calc(100% - 120px); /* Subtract header + formatting bar height */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.editor {
+    height: 100%;
     padding: var(--space-lg);
     overflow-y: auto;
     outline: none;
+    min-height: 100%;
 }
 
 .note-actions {
     display: flex;
-    gap: var(--space-sm);
+    gap: var (--space-sm);
 }
 
 /* Notifications */
@@ -524,7 +546,7 @@ body.has-banner .notes-container {
 .btn-secondary {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
+    gap: var (--space-sm);
     padding: var(--space-sm) var(--space-md);
     border: 1px solid var(--border-medium);
     border-radius: var(--radius-md);
@@ -821,6 +843,22 @@ body.has-banner .notes-container {
     color: var(--text-tertiary);
 }
 
+/* Mobile Element Visibility */
+.mobile-menu-btn,
+.mobile-sidebar,
+.mobile-bottom-nav,
+.mobile-search-wrapper,
+.mobile-auth-container,
+.mobile-notes-list {
+    display: none;
+}
+
+/* Hide mobile-only content */
+@media (min-width: 769px) {
+    .mobile-only {
+        display: none !important;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .search-container {
@@ -848,6 +886,31 @@ body.has-banner .notes-container {
     }
 }
 
+/* Touch Optimizations */
+@media (hover: none) {
+    /* Make all interactive elements at least 44px for touch */
+    button,
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    input,
+    select,
+    .formatting-btn,
+    .action-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Add active state feedback */
+    button:active,
+    .btn:active,
+    .nav-link:active,
+    .dropdown-item:active {
+        transform: scale(0.96);
+        transition: transform 0.1s ease;
+    }
+}
+
 /* Utilities */
 .visually-hidden {
     position: absolute;
@@ -858,4 +921,5 @@ body.has-banner .notes-container {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     border: 0;
+}
 }

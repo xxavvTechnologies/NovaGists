@@ -106,7 +106,6 @@
             font-size: 28px;
         }
     </style>
-    <script src="theme.js"></script>
     <script>
         // Dynamic stylesheet switching
         function loadMobileStyles() {
@@ -132,17 +131,54 @@
         // Listen for viewport changes
         window.matchMedia('(max-width: 768px)').addListener(handleViewportChange);
     </script>
+    <!-- Add mobile.js before closing head -->
+    <script src="mobile.js" defer></script>
 </head>
 <body>
+    <!-- Update mobile sidebar structure -->
+    <div class="mobile-sidebar" id="mobile-sidebar">
+        <div class="mobile-sidebar-header">
+            <div class="logo-container">
+                <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" height="32">
+            </div>
+            <button class="mobile-close-btn" id="mobile-close-btn">
+                <i class="ri-close-line"></i>
+            </button>
+        </div>
+        <div class="mobile-search-wrapper">
+            <div class="search-container">
+                <i class="ri-search-line search-icon"></i>
+                <input type="text" 
+                       id="mobile-search" 
+                       placeholder="Search notes..." 
+                       class="search-input"
+                       autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       spellcheck="false"
+                       data-form-type="other">
+            </div>
+        </div>
+        <div class="mobile-sidebar-content">
+            <div id="mobile-notes-list" class="mobile-notes-list">
+                <!-- Notes will be cloned here for mobile -->
+            </div>
+        </div>
+    </div>
+
     <div id="notification-container" class="notification-container"></div>
     
     <div id="update-banner" class="update-banner">
-        <span>🎉 Nova Gists 2.5.0 is here! Major improvements to authentication, theme system, and user experience. </span>
+        <span>🎉 Nova Gists 2.6.0 is here! Major improvements to search functionality and mobile optimization. </span>
         <a href="changelog.html">See what's new!</a>
         <button class="close-banner" onclick="dismissBanner()">×</button>
     </div>
 
     <header class="app-header">
+        <!-- Add mobile menu button -->
+        <button class="mobile-menu-btn" id="mobile-menu-btn">
+            <i class="ri-menu-line"></i>
+        </button>
         <div class="header-left">
             <div class="logo-container">
                 <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" height="40">
@@ -155,9 +191,10 @@
                        placeholder="Search notes..." 
                        class="search-input"
                        autocomplete="off"
-                       spellcheck="false"
                        autocorrect="off"
-                       autocapitalize="off">
+                       autocapitalize="off"
+                       spellcheck="false"
+                       data-form-type="other">
             </div>
         </div>
 
@@ -389,7 +426,7 @@
 
         function updateBannerState() {
             const banner = document.getElementById('update-banner');
-            const isDismissed = localStorage.getItem('updbanner2.5.0');
+            const isDismissed = localStorage.getItem('updbanner2.6.0'); // Updated version number
             if (isDismissed !== 'true' && banner) {
                 document.body.classList.add('has-banner');
                 banner.style.display = 'block';
@@ -400,7 +437,7 @@
         }
 
         function dismissBanner() {
-            localStorage.setItem('updbanner2.5.0', 'true');
+            localStorage.setItem('updbanner2.6.0', 'true'); // Updated version number
             updateBannerState();
         }
 
@@ -445,6 +482,15 @@
         // Close modal when clicking close button
         document.querySelector('#loginModal .close')?.addEventListener('click', () => {
             document.getElementById('loginModal').style.display = 'none';
+        });
+
+        // Add mobile menu handlers
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+            document.getElementById('mobile-sidebar').classList.add('active');
+        });
+
+        document.getElementById('mobile-close-btn')?.addEventListener('click', () => {
+            document.getElementById('mobile-sidebar').classList.remove('active');
         });
     </script>
 </body>
