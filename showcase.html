@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Gists 3.0 - What's New</title>
+    <link rel="icon" type="image/png" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://api.fontshare.com/v2/css?f[]=space-grotesk@400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .showcase-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .feature-card {
+            background: var(--surface-dark);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .feature-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .version-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 0.8;
+        }
+
+        .header-image {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            display: block;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-container">
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Nova Gists
+        </a>
+
+        <span class="version-tag">Version 3.0</span>
+        
+        <h1>What's New in Nova Gists</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+            Discover the latest improvements and features we've added to make your note-taking experience even better.
+        </p>
+
+        <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" class="header-image">
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-user-circle"></i>
+                Enhanced Profile Menu
+            </h3>
+            <p>We've redesigned the profile experience with a new dropdown menu that gives you quick access to your account settings and sign out option. The menu shows your profile picture, name, and email for easy account identification.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-search"></i>
+                Improved Search Experience
+            </h3>
+            <p>The search functionality now includes a dedicated button in the header with a keyboard shortcut (Ctrl+K), making it easier to find your gists. The search modal supports both personal and community gist searches.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-mobile-alt"></i>
+                Mobile Optimizations
+            </h3>
+            <p>We've enhanced the mobile experience with better touch targets, improved keyboard handling, and a mobile-friendly profile menu that slides up from the bottom. The app now fully supports iOS safe areas and dynamic islands.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-paint-brush"></i>
+                Refined User Interface
+            </h3>
+            <p>The entire application has received a visual refresh with smoother animations, better contrast, and more consistent spacing. Dark mode support has been enhanced for better visibility.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-shield-alt"></i>
+                Security Improvements
+            </h3>
+            <p>Enhanced Firestore security rules now provide better protection for your data while maintaining the flexibility to share and collaborate when needed.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-bell"></i>
+                New Notification System
+            </h3>
+            <p>A completely redesigned notification system provides clearer feedback for your actions with support for success, error, warning, and loading states.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-code"></i>
+                Technical Improvements
+            </h3>
+            <ul style="color: var(--text-secondary); line-height: 1.6; list-style-type: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem;">• Enhanced Progressive Web App (PWA) support</li>
+                <li style="margin-bottom: 0.5rem;">• Improved offline functionality</li>
+                <li style="margin-bottom: 0.5rem;">• Better performance with optimized animations</li>
+                <li style="margin-bottom: 0.5rem;">• Reduced bundle size for faster loading</li>
+                <li>• Improved accessibility throughout the app</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; margin-bottom: 2rem;">
+            <a href="index.html" class="btn btn-primary" style="font-size: 1.1rem;">
+                Try Nova Gists 3.0 Now
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

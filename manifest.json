@@ -1,0 +1,16 @@
+{
+  "name": "Nova Gists",
+  "short_name": "Gists",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "description": "A modern gist-taking app",
+  "icons": [
+    {
+      "src": "https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
