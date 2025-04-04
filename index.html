@@ -42,7 +42,7 @@
                 <button type="submit" id="signInBtn">Sign In with Nova ID</button>
             </form>
             <p class="auth-footer">
-                Need a Nova ID? <a href="https://account.nova.xxavvgroup.com" target="_blank">Create Account</a>
+                Need a Nova ID? <a href="https://account.novasuite.one" target="_blank">Create Account</a>
             </p>
         </div>
     </div>
@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a href="https://account.nova.xxavvgroup.com" class="dropdown-item" target="_blank">
+                        <a href="https://account.novasuite.one" class="dropdown-item" target="_blank">
                             <i class="fas fa-user-cog"></i>
                             Manage Account
                         </a>
@@ -84,8 +84,15 @@
         
         <div class="welcome-banner" id="welcomeBanner" style="display: none;">
             <div class="banner-content">
-                <span class="version-badge">New in 3.0</span>
-                <p>Welcome to Nova Gists 3.0! Check out all the new features.</p>
+                <span class="version-badge">New in 3.1</span>
+                <div class="banner-main">
+                    <p>Welcome to Nova Gists 3.1! Introducing AI insights powered by Astro AI.</p>
+                    <div class="banner-features">
+                        <span class="feature-pill"><i class="fas fa-robot"></i> AI Analysis</span>
+                        <span class="feature-pill"><i class="fas fa-tags"></i> Tag Management</span>
+                        <span class="feature-pill"><i class="fas fa-mobile-alt"></i> Better Mobile Experience</span>
+                    </div>
+                </div>
             </div>
             <div class="banner-actions">
                 <a href="showcase.html" class="btn btn-secondary">See What's New</a>
@@ -118,15 +125,33 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="editTitle" placeholder="Title (optional)" class="title-input">
+                <div class="tags-input">
+                    <input type="text" id="tagInput" placeholder="Add tags..." class="tag-input">
+                    <div class="tags-list" id="tagsList"></div>
+                </div>
                 <div class="editor-container">
                     <div id="editContent"></div>
                 </div>
             </div>
             <div class="modal-footer">
-                <label class="public-toggle">
-                    <input type="checkbox" id="isPublic">
-                    <span class="toggle-label"><i class="fas fa-globe"></i> Make public</span>
-                </label>
+                <div class="modal-actions-left">
+                    <button class="btn btn-icon" id="exportPDF" title="Export as PDF">
+                        <i class="fas fa-file-pdf"></i>
+                    </button>
+                    <button class="btn btn-icon" id="shareLink" title="Share via URL">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+                <div class="modal-toggles">
+                    <label class="public-toggle">
+                        <input type="checkbox" id="isPublic">
+                        <span class="toggle-label"><i class="fas fa-globe"></i> Make public</span>
+                    </label>
+                    <label class="ai-toggle">
+                        <input type="checkbox" id="enableAI">
+                        <span class="toggle-label"><i class="fas fa-brain"></i> AI Insights</span>
+                    </label>
+                </div>
                 <div class="modal-actions">
                     <button class="btn btn-secondary" id="cancelEdit">Cancel</button>
                     <button class="btn btn-primary" id="saveEdit">Save Changes</button>
@@ -142,5 +167,6 @@
     <script src="editor.js"></script>
     <script src="search.js"></script>
     <script src="app.js"></script>
+    <script src="ai-service.js"></script>
 </body>
 </html>

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "node-fetch": "^2.6.1",
+    "puppeteer-core": "^20.9.0",
+    "@sparticuz/chromium": "^113.0.0",
+    "marked": "^7.0.2"
+  }
+}

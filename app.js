@@ -45,6 +45,7 @@ const cancelEditBtn = document.getElementById('cancelEdit');
 const closeModalBtn = document.querySelector('.close-modal');
 
 let currentEditId = null;
+let astroAI;
 
 // Register service worker for PWA support
 if ('serviceWorker' in navigator) {
@@ -56,6 +57,11 @@ if ('serviceWorker' in navigator) {
         });
     });
 }
+
+// Initialize services
+window.addEventListener('load', () => {
+    astroAI = new AstroAI();
+});
 
 // Add mobile touch handlers
 function setupMobileHandlers() {
@@ -113,8 +119,8 @@ function setupWelcomeBanner() {
     const welcomeBanner = document.getElementById('welcomeBanner');
     const closeBannerBtn = welcomeBanner.querySelector('.close-banner');
     
-    // Check if user has dismissed the banner
-    const hasSeenBanner = localStorage.getItem('novaGists_v2_banner_dismissed');
+    // Check if user has seen this version's banner
+    const hasSeenBanner = localStorage.getItem('novaGists_v3.1_banner_dismissed');
     
     if (!hasSeenBanner) {
         welcomeBanner.style.display = 'flex';
@@ -125,7 +131,7 @@ function setupWelcomeBanner() {
         setTimeout(() => {
             welcomeBanner.style.display = 'none';
         }, 300);
-        localStorage.setItem('novaGists_v2_banner_dismissed', 'true');
+        localStorage.setItem('novaGists_v3.1_banner_dismissed', 'true');
     });
 }
 
@@ -181,7 +187,7 @@ authForm.addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Sign in error:', error.message);
         const errorMessages = {
-            'auth/user-not-found': 'No Nova ID found with this email. Create one at account.nova.xxavvgroup.com',
+            'auth/user-not-found': 'No Nova ID found with this email. Create one at account.novasuite.one',
             'auth/wrong-password': 'Incorrect password for this Nova ID',
             'auth/invalid-email': 'Please enter a valid email address'
         };
@@ -387,6 +393,8 @@ function openModal(id, note) {
     editTitle.value = note.title || '';
     document.getElementById('isPublic').checked = note.isPublic || false;
     window.editor.setModalContent(note.content || '');
+    currentTags = note.tags || [];
+    renderTags();
     editModal.style.display = 'block';
     document.body.style.overflow = 'hidden';
 }
@@ -423,14 +431,32 @@ saveEditBtn.addEventListener('click', async () => {
     }
 
     const loadingId = notifications.loading('Updating gist...');
-    const updatedNote = {
-        title: editTitle.value.trim(),
-        content: content,
-        isPublic: document.getElementById('isPublic').checked,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    };
     
     try {
+        const updatedNote = {
+            title: editTitle.value.trim(),
+            content: content,
+            isPublic: document.getElementById('isPublic').checked,
+            tags: currentTags,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Add AI analysis if enabled
+        if (document.getElementById('enableAI').checked) {
+            try {
+                const analysis = await astroAI.analyze(content);
+                updatedNote.aiInsights = analysis;
+                
+                // Add insights to the modal
+                const aiContainer = document.createElement('div');
+                aiContainer.innerHTML = astroAI.formatInsights(analysis);
+                document.querySelector('.modal-body').appendChild(aiContainer);
+            } catch (error) {
+                console.error('AI analysis failed:', error);
+                notifications.warning('AI analysis failed, saving note without insights');
+            }
+        }
+
         await db.collection('notes').doc(currentEditId).update(updatedNote);
         notifications.updateLoading(loadingId, 'Gist updated successfully');
         closeModal();
@@ -456,4 +482,79 @@ function autoResizeTextarea() {} // No-op
     
     // Resize on window resize
     window.addEventListener('resize', () => autoResizeTextarea(textarea));
+});
+
+// Tag Management
+const tagInput = document.getElementById('tagInput');
+const tagsList = document.getElementById('tagsList');
+let currentTags = [];
+
+tagInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+        e.preventDefault();
+        const tag = tagInput.value.trim().toLowerCase();
+        if (tag && !currentTags.includes(tag)) {
+            currentTags.push(tag);
+            renderTags();
+        }
+        tagInput.value = '';
+    }
+});
+
+function renderTags() {
+    tagsList.innerHTML = currentTags.map(tag => `
+        <span class="tag">
+            #${tag}
+            <button onclick="removeTag('${tag}')" class="remove-tag">×</button>
+        </span>
+    `).join('');
+}
+
+function removeTag(tag) {
+    currentTags = currentTags.filter(t => t !== tag);
+    renderTags();
+}
+
+// Export to PDF
+document.getElementById('exportPDF').addEventListener('click', async () => {
+    const loadingId = notifications.loading('Generating PDF...');
+    try {
+        const content = window.editor.getModalContent();
+        const title = editTitle.value;
+        
+        const response = await fetch('/.netlify/functions/generate-pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content, title })
+        });
+        
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${title || 'gist'}.pdf`;
+        a.click();
+        
+        notifications.updateLoading(loadingId, 'PDF downloaded successfully');
+    } catch (error) {
+        console.error('PDF generation failed:', error);
+        notifications.updateLoading(loadingId, 'Failed to generate PDF', 'error');
+    }
+});
+
+// Share via URL
+document.getElementById('shareLink').addEventListener('click', async () => {
+    if (!document.getElementById('isPublic').checked) {
+        notifications.warning('Make the gist public first to share it');
+        return;
+    }
+    
+    const shareUrl = `${window.location.origin}/gist/${currentEditId}`;
+    try {
+        await navigator.clipboard.writeText(shareUrl);
+        notifications.success('Share link copied to clipboard');
+    } catch (error) {
+        notifications.error('Failed to copy share link');
+        console.error('Share link copy failed:', error);
+    }
 });

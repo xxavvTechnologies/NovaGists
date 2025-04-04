@@ -70,6 +70,24 @@
             border-radius: 1rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .feature-card.highlight {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+        }
+
+        .feature-card.highlight h3,
+        .feature-card.highlight p {
+            color: white;
+        }
+        
+        .feature-card.highlight i {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .feature-card ul {
+            margin-left: 1.5rem;
+        }
     </style>
 </head>
 <body>
@@ -79,7 +97,7 @@
             Back to Nova Gists
         </a>
 
-        <span class="version-tag">Version 3.0</span>
+        <span class="version-tag">Version 3.1</span>
         
         <h1>What's New in Nova Gists</h1>
         <p style="color: var(--text-secondary); margin-bottom: 2rem;">
@@ -88,66 +106,59 @@
 
         <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Gists" class="header-image">
 
-        <div class="feature-card">
+        <div class="feature-card highlight">
             <h3>
-                <i class="fas fa-user-circle"></i>
-                Enhanced Profile Menu
+                <i class="fas fa-robot"></i>
+                Astro AI Integration
             </h3>
-            <p>We've redesigned the profile experience with a new dropdown menu that gives you quick access to your account settings and sign out option. The menu shows your profile picture, name, and email for easy account identification.</p>
+            <p>Introducing AI-powered insights for your gists! Get smart summaries, sentiment analysis, and keyword extraction to help organize and understand your content better. Enable AI analysis with a single click when editing your gists.</p>
         </div>
 
         <div class="feature-card">
             <h3>
-                <i class="fas fa-search"></i>
-                Improved Search Experience
+                <i class="fas fa-tags"></i>
+                Enhanced Tag Management
             </h3>
-            <p>The search functionality now includes a dedicated button in the header with a keyboard shortcut (Ctrl+K), making it easier to find your gists. The search modal supports both personal and community gist searches.</p>
+            <p>New tag management system allows you to organize your gists with easy add/remove functionality. Tags are displayed with a modern design and help you categorize and find your content quickly.</p>
         </div>
 
         <div class="feature-card">
             <h3>
-                <i class="fas fa-mobile-alt"></i>
-                Mobile Optimizations
+                <i class="fas fa-file-pdf"></i>
+                Export to PDF
             </h3>
-            <p>We've enhanced the mobile experience with better touch targets, improved keyboard handling, and a mobile-friendly profile menu that slides up from the bottom. The app now fully supports iOS safe areas and dynamic islands.</p>
+            <p>Export your gists to beautifully formatted PDF documents with proper styling, code highlighting, and markdown support. Perfect for sharing or archiving your notes.</p>
         </div>
 
         <div class="feature-card">
             <h3>
-                <i class="fas fa-paint-brush"></i>
-                Refined User Interface
+                <i class="fas fa-share-alt"></i>
+                Improved Sharing
             </h3>
-            <p>The entire application has received a visual refresh with smoother animations, better contrast, and more consistent spacing. Dark mode support has been enhanced for better visibility.</p>
-        </div>
-
-        <div class="feature-card">
-            <h3>
-                <i class="fas fa-shield-alt"></i>
-                Security Improvements
-            </h3>
-            <p>Enhanced Firestore security rules now provide better protection for your data while maintaining the flexibility to share and collaborate when needed.</p>
-        </div>
-
-        <div class="feature-card">
-            <h3>
-                <i class="fas fa-bell"></i>
-                New Notification System
-            </h3>
-            <p>A completely redesigned notification system provides clearer feedback for your actions with support for success, error, warning, and loading states.</p>
+            <p>Share your gists via URL with the new public sharing feature. Make your gists public and share them with anyone, while keeping your private notes secure.</p>
         </div>
 
         <div class="feature-card">
             <h3>
                 <i class="fas fa-code"></i>
-                Technical Improvements
+                Enhanced Markdown Support
             </h3>
-            <ul style="color: var(--text-secondary); line-height: 1.6; list-style-type: none; padding: 0;">
-                <li style="margin-bottom: 0.5rem;">• Enhanced Progressive Web App (PWA) support</li>
-                <li style="margin-bottom: 0.5rem;">• Improved offline functionality</li>
-                <li style="margin-bottom: 0.5rem;">• Better performance with optimized animations</li>
-                <li style="margin-bottom: 0.5rem;">• Reduced bundle size for faster loading</li>
-                <li>• Improved accessibility throughout the app</li>
-            </ul>
+            <p>Improved markdown rendering with better styling, code syntax highlighting, and proper formatting. Your code blocks now look better than ever with language-specific highlighting.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>
+                <i class="fas fa-mobile-alt"></i>
+                Mobile Experience Improvements
+            </h3>
+            <p>Major improvements to mobile usability including:
+                <ul style="color: var(--text-secondary); margin-top: 0.5rem; list-style-type: none; padding: 0;">
+                    <li style="margin-bottom: 0.5rem;">• Fixed scrolling issues on iOS devices</li>
+                    <li style="margin-bottom: 0.5rem;">• Improved modal behavior on mobile</li>
+                    <li style="margin-bottom: 0.5rem;">• Better touch handling and keyboard support</li>
+                    <li>• Enhanced responsive design for all screen sizes</li>
+                </ul>
+            </p>
         </div>
 
         <div style="text-align: center; margin-top: 3rem; margin-bottom: 2rem;">

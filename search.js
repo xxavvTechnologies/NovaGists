@@ -53,7 +53,7 @@ class SearchModal {
         const helpIcon = modal.querySelector('.help-icon');
         helpIcon.addEventListener('click', (e) => {
             e.stopPropagation();
-            window.open('https://help.nova.xxavvgroup.com/gists/community-search', '_blank');
+            window.open('https://help.novasuite.one/gists/community-search', '_blank');
         });
     }
 
@@ -207,20 +207,16 @@ class SearchModal {
         this.modal.style.display = 'flex';
         this.input.value = '';
         this.input.focus();
-        // Add touch-friendly class
         document.body.classList.add('modal-open');
-        // Prevent background scrolling on mobile
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
+        // Store the scroll position
+        this.scrollPos = window.scrollY;
     }
 
     hide() {
         this.modal.style.display = 'none';
         this.results.innerHTML = '';
         document.body.classList.remove('modal-open');
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
+        // Restore the scroll position
+        window.scrollTo(0, this.scrollPos || 0);
     }
 }
