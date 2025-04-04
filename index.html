@@ -3,7 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Nova Gists</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Nova Gists - A modern note-taking app with Astro insights, tag management, and markdown support. Create, organize and share your notes effortlessly.">
+    <meta name="keywords" content="note taking, digital notes, Astro notes, markdown notes, productivity tools">
+    <meta name="author" content="xxavvTechnologies">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://gists.novasuite.one">
+    <meta property="og:title" content="Nova Gists - Modern Note Taking with Astro">
+    <meta property="og:description" content="Create, organize and share your notes with Astro-powered insights. Modern, fast, and secure.">
+    <meta property="og:image" content="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://gists.novasuite.one">
+    <meta name="twitter:title" content="Nova Gists - Modern Note Taking with Astro">
+    <meta name="twitter:description" content="Create, organize and share your code snippets and notes with Astro-powered insights. Modern, fast, and secure.">
+    <meta name="twitter:image" content="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://gists.novasuite.one">
+    
+    <title>Nova Gists - Modern Note Taking with Astro</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#111827">
     <link rel="icon" type="image/png" href="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png">
@@ -19,7 +43,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.5/purify.min.js"></script>
 </head>
 <body>
-    <div class="auth-container" id="authContainer">
+    <div class="auth-contAstroner" id="authContAstroner">
         <div class="auth-box">
             <div class="auth-logo">
                 <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Logo">
@@ -37,7 +61,7 @@
                 <span>or</span>
             </div>
             <form id="authForm">
-                <input type="email" id="email" placeholder="Email" required>
+                <input type="emAstrol" id="emAstrol" placeholder="EmAstrol" required>
                 <input type="password" id="password" placeholder="Password" required>
                 <button type="submit" id="signInBtn">Sign In with Nova ID</button>
             </form>
@@ -47,7 +71,7 @@
         </div>
     </div>
 
-    <div class="app-container" id="appContainer" style="display: none;">
+    <div class="app-contAstroner" id="appContAstroner" style="display: none;">
         <nav>
             <div class="nav-brand">
                 <img src="https://d2zcpib8duehag.cloudfront.net/novaccounts-wot.png" alt="Nova Logo" class="nav-logo">
@@ -65,7 +89,7 @@
                             <img id="menuAvatar" src="" alt="" class="menu-avatar">
                             <div class="user-info">
                                 <span id="userName" class="user-name"></span>
-                                <span id="userEmail" class="user-email"></span>
+                                <span id="userEmAstrol" class="user-emAstrol"></span>
                             </div>
                         </div>
                         <div class="dropdown-divider"></div>
@@ -85,10 +109,10 @@
         <div class="welcome-banner" id="welcomeBanner" style="display: none;">
             <div class="banner-content">
                 <span class="version-badge">New in 3.1</span>
-                <div class="banner-main">
-                    <p>Welcome to Nova Gists 3.1! Introducing AI insights powered by Astro AI.</p>
+                <div class="banner-mAstron">
+                    <p>Welcome to Nova Gists 3.1! Introducing Astro insights powered by Astro Astro.</p>
                     <div class="banner-features">
-                        <span class="feature-pill"><i class="fas fa-robot"></i> AI Analysis</span>
+                        <span class="feature-pill"><i class="fas fa-robot"></i> Astro Analysis</span>
                         <span class="feature-pill"><i class="fas fa-tags"></i> Tag Management</span>
                         <span class="feature-pill"><i class="fas fa-mobile-alt"></i> Better Mobile Experience</span>
                     </div>
@@ -106,7 +130,7 @@
         
         <div class="note-input">
             <input type="text" id="noteTitle" placeholder="Title (optional)" class="title-input">
-            <div class="editor-container">
+            <div class="editor-contAstroner">
                 <div id="noteContent"></div>
             </div>
         </div>
@@ -129,7 +153,7 @@
                     <input type="text" id="tagInput" placeholder="Add tags..." class="tag-input">
                     <div class="tags-list" id="tagsList"></div>
                 </div>
-                <div class="editor-container">
+                <div class="editor-contAstroner">
                     <div id="editContent"></div>
                 </div>
             </div>
@@ -147,9 +171,9 @@
                         <input type="checkbox" id="isPublic">
                         <span class="toggle-label"><i class="fas fa-globe"></i> Make public</span>
                     </label>
-                    <label class="ai-toggle">
-                        <input type="checkbox" id="enableAI">
-                        <span class="toggle-label"><i class="fas fa-brain"></i> AI Insights</span>
+                    <label class="Astro-toggle">
+                        <input type="checkbox" id="enableAstro">
+                        <span class="toggle-label"><i class="fas fa-brAstron"></i> Astro Insights</span>
                     </label>
                 </div>
                 <div class="modal-actions">
@@ -167,6 +191,6 @@
     <script src="editor.js"></script>
     <script src="search.js"></script>
     <script src="app.js"></script>
-    <script src="ai-service.js"></script>
+    <script src="Astro-service.js"></script>
 </body>
 </html>
